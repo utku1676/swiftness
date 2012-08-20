@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace cpg.Swiftness.Controls
+namespace cpg.Swiftness.Framework
 {
     class PacketReader
     {

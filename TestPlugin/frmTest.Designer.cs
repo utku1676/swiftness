@@ -1,6 +1,6 @@
-﻿namespace cpg.Swiftness.Plugin
+﻿namespace cpg.Swiftness.Plugins.TestPlugin
 {
-    partial class frmPlugin
+    partial class frmTest
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // frmPlugin
+            // frmTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 257);
-            this.Name = "frmPlugin";
-            this.Text = "Plugin";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPlugin_FormClosing);
+            this.ClientSize = new System.Drawing.Size(349, 268);
+            this.Name = "frmTest";
+            this.Text = "frmTest";
             this.ResumeLayout(false);
 
         }

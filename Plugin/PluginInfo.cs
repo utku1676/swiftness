@@ -5,6 +5,7 @@ using System.Text;
 
 namespace cpg.Swiftness.Plugin
 {
+    [Serializable]
     public struct PluginInfo
     {
         public string PluginName;
@@ -12,5 +13,11 @@ namespace cpg.Swiftness.Plugin
         public Version PluginVersion;
         public string PluginURL;
         public string PluginDesc;
+    }
+
+    [Serializable]
+    public struct PluginParams
+    {
+        public System.Windows.Forms.Form mdiParent;
     }
 }
