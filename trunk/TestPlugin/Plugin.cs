@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using cpg.Swiftness.Plugin;
 
-namespace TestPlugin
+namespace cpg.Swiftness.Plugins.TestPlugin
 {
-    public class TestPlugin : IPlugin
+    public class TestPlugin : MarshalByRefObject, IPlugin
     {
         string pName = "Test Plugin";
         string pAuthor = "florian0";
@@ -29,14 +26,15 @@ namespace TestPlugin
             }
         }
 
-        public void Intialize()
+        public void Initalize(PluginParams param)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void Shutdown(PluginParams param)
         {
             throw new NotImplementedException();
         }
 
-        public void Shutdown()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

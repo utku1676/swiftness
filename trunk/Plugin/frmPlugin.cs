@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace cpg.Swiftness.Plugin
 {
+    [Serializable]
     public partial class frmPlugin : Form
     {
         public frmPlugin()
@@ -16,9 +17,21 @@ namespace cpg.Swiftness.Plugin
             InitializeComponent();
         }
 
-        private void frmPlugin_Load(object sender, EventArgs e)
+        // Loader for MdiChilds
+        public frmPlugin(Form parent)
         {
+            this.MdiParent = parent;
+        }
 
+        private void frmPlugin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Check if MidForm is closed
+            if (e.CloseReason == CloseReason.MdiFormClosing)
+                return;
+
+            // If not, just hide the dialog to be able to show it later
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace cpg.Swiftness.Forms
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            new frmPlugins(this);
+            new frmPluginManager(this);
             new frmLog(this).Show(); ;
 
             Log.Write("test");
@@ -29,7 +29,7 @@ namespace cpg.Swiftness.Forms
 
         private void pluginManagerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowChild(typeof(frmPlugins));
+            ShowChild(typeof(frmPluginManager));
         }
 
         private void ShowChild(Type tchild)

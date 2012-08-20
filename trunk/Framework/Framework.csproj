@@ -8,7 +8,7 @@
     <ProjectGuid>{45E822BE-9BBA-41EB-A4F4-482BB9567756}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cpg.Swiftness.Controls</RootNamespace>
+    <RootNamespace>cpg.Swiftness.Framework</RootNamespace>
     <AssemblyName>Framework</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

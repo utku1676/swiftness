@@ -18,8 +18,6 @@ namespace cpg.Swiftness.Forms
 
         public MDIchild(Form parent)
         {
-            InitializeComponent();
-
             this.MdiParent = parent;
         }
 
