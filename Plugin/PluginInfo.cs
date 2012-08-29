@@ -8,16 +8,16 @@ namespace cpg.Swiftness.Plugin
     [Serializable]
     public struct PluginInfo
     {
-        public string PluginName;
-        public string PluginAuthor;
-        public Version PluginVersion;
-        public string PluginURL;
-        public string PluginDesc;
+        public string Name;
+        public string Author;
+        public Version Version;
+        public string URL;
+        public string Desc;
     }
 
     [Serializable]
     public struct PluginParams
     {
-        public System.Windows.Forms.Form mdiParent;
+        
     }
 }

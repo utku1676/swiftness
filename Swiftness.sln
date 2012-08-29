@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swiftness", "Swiftness\Swiftness.csproj", "{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{45E822BE-9BBA-41EB-A4F4-482BB9567756} = {45E822BE-9BBA-41EB-A4F4-482BB9567756}
@@ -18,10 +18,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,6 +26,10 @@ Global
 		{65C54637-C022-474E-B5B4-9FAF65969AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C54637-C022-474E-B5B4-9FAF65969AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65C54637-C022-474E-B5B4-9FAF65969AF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F567DF8D-CE1D-47DB-BD09-69085AEEAD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F567DF8D-CE1D-47DB-BD09-69085AEEAD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F567DF8D-CE1D-47DB-BD09-69085AEEAD15}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace cpg.Swiftness.Forms
 {
+    [Serializable]
     public partial class frmMain : Form
     {
 
@@ -52,14 +53,13 @@ namespace cpg.Swiftness.Forms
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            return; // Temporary
 
-            // Ask for exit
-            DialogResult res = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
+            //// Ask for exit
+            //DialogResult res = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
 
-            // If not yes, cancel exit
-            if (res != DialogResult.Yes)
-                e.Cancel = true;
+            //// If not yes, cancel exit
+            //if (res != DialogResult.Yes)
+            //    e.Cancel = true;
         }
         #endregion
     }

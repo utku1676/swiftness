@@ -18,22 +18,36 @@ namespace cpg.Swiftness.PluginSystem
         /// </summary>
         public static void RefreshPluginlist()
         {
+            #region Refresh current plugins
+
+            foreach (Plugin plugin in pluginlist)
+            {
+                // Refresh all plugins that are not loaded
+                if (!plugin.Loaded)
+                {
+                    plugin.UpdateInfo();
+                }
+            }
+
+            #endregion
+
+            #region Scan for new Plugins
             DirectoryInfo dir = new DirectoryInfo("./Plugins/");
             FileInfo[] files = dir.GetFiles("*.dll", SearchOption.TopDirectoryOnly);
 
             foreach (FileInfo file in files)
             {
+                // Skip already existing plugins
                 if (pluginExists(file.Name))
                     continue;
 
                 // Create Plugin
                 Plugin plugin = new Plugin(file.FullName);
 
-
-
                 pluginlist.Add(plugin);
 
             }
+            #endregion
         }
 
         #region Properties
@@ -46,24 +60,6 @@ namespace cpg.Swiftness.PluginSystem
         }
         #endregion
 
-
-        /// <summary>
-        /// Returns the Plugin that matches the given filename
-        /// </summary>
-        /// <param name="fileName">The filename of the plugin</param>
-        /// <returns></returns>
-        private static Plugin getPluginByFilename(string fileName)
-        {
-            foreach (Plugin plugin in pluginlist)
-            {
-                if (plugin.FileName == fileName)
-                {
-                    return plugin;
-                }
-            }
-
-            throw new Exception("Plugin was not found");
-        }
 
         /// <summary>
         /// Checks is a plugin exists (by filename)

@@ -72,13 +72,13 @@
             // 
             // lbl_link
             // 
-            this.lbl_link.AutoSize = true;
-            this.lbl_link.Location = new System.Drawing.Point(301, 70);
+            this.lbl_link.Location = new System.Drawing.Point(76, 70);
             this.lbl_link.Name = "lbl_link";
-            this.lbl_link.Size = new System.Drawing.Size(64, 13);
+            this.lbl_link.Size = new System.Drawing.Size(289, 13);
             this.lbl_link.TabIndex = 22;
             this.lbl_link.TabStop = true;
             this.lbl_link.Text = "Plugin-Page";
+            this.lbl_link.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lbl_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbl_link_LinkClicked);
             // 
             // btn_endisable
@@ -89,6 +89,7 @@
             this.btn_endisable.TabIndex = 20;
             this.btn_endisable.Text = "Enable";
             this.btn_endisable.UseVisualStyleBackColor = true;
+            this.btn_endisable.Click += new System.EventHandler(this.btn_endisable_Click);
             // 
             // btn_loadunload
             // 
@@ -98,6 +99,7 @@
             this.btn_loadunload.TabIndex = 21;
             this.btn_loadunload.Text = "Load";
             this.btn_loadunload.UseVisualStyleBackColor = true;
+            this.btn_loadunload.Click += new System.EventHandler(this.btn_loadunload_Click);
             // 
             // pictureBox1
             // 

@@ -3,24 +3,59 @@ using System.Security.Policy;
 using System.Reflection;
 using System.IO;
 using cpg.Swiftness.Plugin;
+using System.Runtime.InteropServices;
 
 
 namespace cpg.Swiftness.PluginSystem
 {
     class Plugin
     {
+        #region Imports
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        [DllImport("user32.dll")]
+        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+
+        #endregion
+
+        #region Constants
+        const int GWL_STYLE = (-16);
+        const int WS_CAPTION = 0xC00000;
+        const int WS_THICKFRAME = 0x40000;
+        const int WS_MAXIMIZE = 0x1000000;
+        const int WS_MINIMIZE = 0x20000000;
+        const int WS_SYSMENU = 0x80000;
+
+
+        const short SWP_NOMOVE = 0X2;
+        const short SWP_NOSIZE = 1;
+        const short SWP_NOZORDER = 0X4;
+        const int SWP_SHOWWINDOW = 0x0040;
+
+        #endregion
+
+
         #region Privates
         AppDomain _appDomain;       // AppDomain holding the plugin-assembly
         IPlugin _instance;          // Instance of the plugin-interface
         PluginInfo _pluginInfo;     // Holds information about the plugin (Name, Version, Author, etc)
-        frmPlugin _pluginForm;       // MdiChild-Form of the plugin
         FileInfo _fileInfo;         // FileInfo of the Plugin-File
+        Forms.MDIchild _child;      // MDIChild of the Plugin
+        Controls.ctrlPlugin _ctrl;  // Control for the Plugin manager
 
         bool _loaded = false;
         bool _enabled = false;
         bool _autoEnable = false;
         #endregion
 
+        #region Construct
         public Plugin(string assemblyPath)
         {
             _Constructor(assemblyPath, false);
@@ -37,18 +72,24 @@ namespace cpg.Swiftness.PluginSystem
             _autoEnable = autoEnable;
 
             Load();
-            
+
             if (_autoEnable)
                 Enable();
+            else
+                Unload();
 
         }
+        #endregion
 
         #region Properties
+        public PluginInfo PluginInfo
+        { get { return _pluginInfo; } }
+
         public string Name
         {
             get
             {
-                return _pluginInfo.PluginName;
+                return _pluginInfo.Name;
             }
         }
 
@@ -56,7 +97,7 @@ namespace cpg.Swiftness.PluginSystem
         {
             get
             {
-                return _pluginInfo.PluginVersion;
+                return _pluginInfo.Version;
             }
         }
 
@@ -64,7 +105,7 @@ namespace cpg.Swiftness.PluginSystem
         {
             get
             {
-                return _pluginInfo.PluginDesc;
+                return _pluginInfo.Desc;
             }
         }
 
@@ -72,7 +113,7 @@ namespace cpg.Swiftness.PluginSystem
         {
             get
             {
-                return _pluginInfo.PluginAuthor;
+                return _pluginInfo.Author;
             }
         }
 
@@ -80,7 +121,7 @@ namespace cpg.Swiftness.PluginSystem
         {
             get
             {
-                return _pluginInfo.PluginURL;
+                return _pluginInfo.URL;
             }
         }
 
@@ -91,8 +132,18 @@ namespace cpg.Swiftness.PluginSystem
                 return _fileInfo.Name;
             }
         }
-        #endregion
 
+        public bool Enabled
+        {
+            get { return _enabled; }
+        }
+
+        public bool Loaded
+        {
+            get { return _loaded; }
+        }
+
+        #endregion
 
         /// <summary>
         /// Load the plugin
@@ -105,32 +156,34 @@ namespace cpg.Swiftness.PluginSystem
 
             //try
             //{
-                // Create AppDomainSetup-Helper
-                System.AppDomainSetup appDomainSetup = new System.AppDomainSetup();
+            // Create AppDomainSetup-Helper
+            System.AppDomainSetup appDomainSetup = new System.AppDomainSetup();
 
-                // Setup initializer
-                appDomainSetup.AppDomainInitializer = new AppDomainInitializer(InitializerFunc);
+            // Setup initializer
+            appDomainSetup.AppDomainInitializer = new AppDomainInitializer(InitializerFunc);
 
-                // Set parameters for initializer
-                appDomainSetup.AppDomainInitializerArguments = new string[] { _fileInfo.FullName };
+            // Set parameters for initializer
+            appDomainSetup.AppDomainInitializerArguments = new string[] { _fileInfo.FullName };
 
-                // Security-Stuff
-                Evidence adevidence = System.AppDomain.CurrentDomain.Evidence;
+            // Security-Stuff
+            Evidence adevidence = System.AppDomain.CurrentDomain.Evidence;
 
-                // Create AppDomain
-                _appDomain = System.AppDomain.CreateDomain(_fileInfo.Name, adevidence, appDomainSetup);
+            // Create AppDomain
+            _appDomain = System.AppDomain.CreateDomain(_fileInfo.Name, adevidence, appDomainSetup);
 
-                // Get ClassName (set by AppDomainInitializer in Func: "InitializerFunc")
-                string PluginType = (string)_appDomain.GetData("PluginName");
-                string FormType = (string)_appDomain.GetData("FormName");
+            // Setup ExceptionHandler
+            _appDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
 
-                // Create instance of Plugin-Interface
-                //_instance = (IPlugin)_appDomain.CreateInstanceFromAndUnwrap(_fileInfo.FullName, PluginType);
-                _instance = (IPlugin)_appDomain.CreateInstanceFromAndUnwrap(_fileInfo.FullName, PluginType, false, BindingFlags.Default, null, null, null, null, null);
-                //_pluginForm = (frmPlugin)_appDomain.CreateInstanceFromAndUnwrap(_fileInfo.FullName, FormType, false, BindingFlags.Default, null, null, null, null, null);
-                
-                // Get PluginInfo
-                _pluginInfo = _instance.pluginInfo;
+            // Get ClassName (set by AppDomainInitializer in Func: "InitializerFunc")
+            string PluginType = (string)_appDomain.GetData("PluginName");
+
+            // Create instance of Plugin-Interface
+            //_instance = (IPlugin)_appDomain.CreateInstanceFromAndUnwrap(_fileInfo.FullName, PluginType);
+            _instance = (IPlugin)_appDomain.CreateInstanceFromAndUnwrap(_fileInfo.FullName, PluginType, false, BindingFlags.Default, null, null, null, null, null);
+
+            // Get PluginInfo
+            _pluginInfo = _instance.pluginInfo;
+            
 
             //}
             //catch (Exception ex)
@@ -161,7 +214,7 @@ namespace cpg.Swiftness.PluginSystem
             }
 
             // Unload success ...
-            _loaded = true;
+            _loaded = false;
 
         }
 
@@ -177,9 +230,33 @@ namespace cpg.Swiftness.PluginSystem
                 throw new PluginLoaderException("Enable plugin failed: Plugin already enabled");
 
             PluginParams param = new PluginParams();
-            param.mdiParent = Program.mainForm;
-
+            
+            // Initialze Plugin
             _instance.Initalize(param);
+
+            // Remove border of Pluginform
+            int lStyle = GetWindowLong(_instance.Form.Handle, GWL_STYLE);
+            lStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZE | WS_MAXIMIZE | WS_SYSMENU);
+            SetWindowLong(_instance.Form.Handle, GWL_STYLE, lStyle);
+
+            // Create MDIChild
+            _child = new cpg.Swiftness.Forms.MDIchild(Program.mainForm);
+
+            // Resize MDIChild
+            _child.Height = _instance.Form.Height + 40;
+            _child.Width = _instance.Form.Width + 20;
+
+            // Show MDIChild
+            _child.Show();
+
+            // Show Pluginform
+            _instance.Form.Show();
+
+            // Parent Pluginform to MDIChild
+            SetParent(_instance.Form.Handle, _child.Handle);
+
+            // Move Pluginform to fit into the MDIChild
+            SetWindowPos(_instance.Form.Handle, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_SHOWWINDOW | SWP_NOSIZE);
 
             _enabled = true;
         }
@@ -195,18 +272,42 @@ namespace cpg.Swiftness.PluginSystem
             if (!_enabled)
                 throw new PluginLoaderException("Disable plugin failed: Plugin not enabled");
 
+            // Dispose the MDIChild
+            _child.Close();
+            _child.Dispose();
 
+            // Call Shutdown
+            PluginParams param = new PluginParams();
+            _instance.Shutdown(param);
 
+            // Plugin is now disabled
             _enabled = false;
         }
 
+        /// <summary>
+        /// Update the plugin-information (Author, Version, ...)
+        /// </summary>
+        public void UpdateInfo()
+        {
+            // Update only if plugin is not loaded and not enabled)
+            if (!_loaded && !_enabled)
+            {
+                Load();
+                Unload();
+            }
+        }
 
+        public Controls.ctrlPlugin Control
+        {
+            get
+            {
+
+            }
+        }
         private static void InitializerFunc(string[] args)
         {
             // Get instance of actual appdomain (Your new AppDomain)
             AppDomain mydom = AppDomain.CurrentDomain;
-
-            Console.WriteLine(mydom.FriendlyName);
 
             // Load Assembly from File
             Assembly asm = Assembly.LoadFrom(args[0]);
@@ -221,19 +322,18 @@ namespace cpg.Swiftness.PluginSystem
                 {
                     // Save name of class
                     mydom.SetData("PluginName", type.FullName);
-                    continue;
                 }
-
-                //// Check if Form
-                //if (type.BaseType == typeof(frmPlugin))
-                //{
-                //    // save name of class
-                //    mydom.SetData("FormName", type.FullName);
-                //    continue;
-                //}
-
+                else if (type.BaseType.Equals(typeof(frmPlugin)))
+                {
+                    mydom.SetData("FormName", type.FullName);
+                }
             }
         }
 
+        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+            Console.WriteLine("MyHandler caught : " + e.Message);
+        }
     }
 }

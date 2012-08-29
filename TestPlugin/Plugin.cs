@@ -11,24 +11,31 @@ namespace cpg.Swiftness.Plugins.TestPlugin
         string pDesc = "florian0's demoplugin";
         Version pVersion = new Version(1, 0);
 
+        frmTest test;
+
         public PluginInfo pluginInfo
         {
-            get 
+            get
             {
                 PluginInfo info = new PluginInfo();
-                info.PluginAuthor = pAuthor;
-                info.PluginDesc = pDesc;
-                info.PluginName = pName;
-                info.PluginURL = pURL;
-                info.PluginVersion = pVersion;
+                info.Author = pAuthor;
+                info.Desc = pDesc;
+                info.Name = pName;
+                info.URL = pURL;
+                info.Version = pVersion;
                 
                 return info;
             }
         }
 
+        public frmPlugin Form
+        {
+            get { return test; }
+        }
+
         public void Initalize(PluginParams param)
         {
-            //throw new NotImplementedException();
+            test = new frmTest();
         }
 
         public void Shutdown(PluginParams param)
