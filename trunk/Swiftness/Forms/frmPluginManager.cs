@@ -19,10 +19,16 @@ namespace cpg.Swiftness.Forms
 
         private void btn_UpdatePluginList_Click(object sender, EventArgs e)
         {
-            PluginSystem.Plugin plugin = new cpg.Swiftness.PluginSystem.Plugin("Plugins\\TestPlugin.dll", true);
+            flp_plugincontainer.Controls.Clear();
 
-            return;
-            
+            PluginSystem.Core.RefreshPluginlist();
+
+            foreach (PluginSystem.Plugin plugin in PluginSystem.Core.Plugins)
+            {
+                ctrlPlugin ctrl = new ctrlPlugin(plugin.PluginInfo, plugin.Enable, plugin.Disable, plugin.Load, plugin.Unload);
+
+                flp_plugincontainer.Controls.Add(ctrl);
+            }
         }
 
     }

@@ -12,61 +12,86 @@ namespace cpg.Swiftness.Controls
 {
     public partial class ctrlPlugin : UserControl
     {
-        private string pName = "";
-        private string pVersion = "";
-        private string pURL = "";
+        Plugin.PluginInfo _info;
 
-        public ctrlPlugin()
+        //public ctrlPlugin()
+        //{
+        //    InitializeComponent();
+        //}
+
+        public delegate void EnablePlugin();
+        public delegate void DisablePlugin();
+        public delegate void LoadPlugin();
+        public delegate void UnloadPlugin();
+
+        private EnablePlugin _enablefunc;
+        private DisablePlugin _disablefunc;
+        private LoadPlugin _loadfunc;
+        private UnloadPlugin _unloadfunc;
+
+
+        public ctrlPlugin(Plugin.PluginInfo info, EnablePlugin enablefunc, DisablePlugin disablefunc, LoadPlugin loadfunc, UnloadPlugin unloadfunc)
         {
             InitializeComponent();
+
+            _info = info;
+
+            gb_plugin.Text = _info.Name + " " + _info.Version.ToString();
+            lbl_author.Text = _info.Author;
+            lbl_desc.Text = _info.Desc;
+            lbl_link.Text = _info.URL;
+
+            _enablefunc = enablefunc;
+            _disablefunc = disablefunc;
+            _loadfunc = loadfunc;
+            _unloadfunc = unloadfunc;
+
         }
 
+        #region Properties
         public string PluginName
         {
-            get { return pName; }
-            set 
-            {
-                pName = value;
-                gb_plugin.Text = pName + " " + pVersion;
-            }
-
+            get { return _info.Name; }
         }
 
-        public string PluginVersion
+        public Version PluginVersion
         {
-            get { return pVersion; }
-            set
-            {
-                pVersion = value;
-                gb_plugin.Text = pName + " " + pVersion;
-            }
+            get { return _info.Version; }
         }
 
         public string PluginAuthor
         {
-            get { return lbl_author.Text; }
-            set { lbl_author.Text = value;}
+            get { return _info.Author; }
         }
 
         public string PluginPage
         {
-            get { return pURL; }
-            set { pURL = value; }
+            get { return _info.URL; }            
         }
 
         public string PluginDescription
         {
-            get { return lbl_desc.Text; }
-            set { lbl_desc.Text = value; }
+            get { return _info.Desc; }
         }
+        #endregion
 
         private void lbl_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
-                Process.Start(pURL);
+                Process.Start(_info.URL);
             }
             catch { }
+        }
+
+        private void btn_endisable_Click(object sender, EventArgs e)
+        {
+            _enablefunc();
+        }
+
+        private void btn_loadunload_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -8,8 +8,12 @@ namespace cpg.Swiftness.Plugin
             get;
         }
 
+        frmPlugin Form
+        {
+            get;
+        }
+
         void Initalize(PluginParams param);
         void Shutdown(PluginParams param);
-
     }
 }
