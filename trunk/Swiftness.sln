@@ -2,11 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swiftness", "Swiftness\Swiftness.csproj", "{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{45E822BE-9BBA-41EB-A4F4-482BB9567756} = {45E822BE-9BBA-41EB-A4F4-482BB9567756}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{45E822BE-9BBA-41EB-A4F4-482BB9567756}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin", "Plugin\Plugin.csproj", "{65C54637-C022-474E-B5B4-9FAF65969AF3}"
 EndProject
@@ -18,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45E822BE-9BBA-41EB-A4F4-482BB9567756}.Release|Any CPU.Build.0 = Release|Any CPU
 		{65C54637-C022-474E-B5B4-9FAF65969AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65C54637-C022-474E-B5B4-9FAF65969AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C54637-C022-474E-B5B4-9FAF65969AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU

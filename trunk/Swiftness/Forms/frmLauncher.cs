@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace cpg.Swiftness.Forms
+namespace Swiftness.Forms
 {
-    public partial class frmLauncher : MDIchild
+    public partial class frmLauncher : MDIChild
     {
-        public frmLauncher()
+        public frmLauncher(Form parent) : base(parent)
         {
             InitializeComponent();
         }
+
     }
 }

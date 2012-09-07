@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using cpg.Swiftness.Controls;
+using Swiftness.Controls;
 
-namespace cpg.Swiftness.Forms
+namespace Swiftness.Forms
 {
-    public partial class frmPluginManager : MDIchild
+    public partial class frmPluginManager : MDIChild
     {
-        public frmPluginManager()
-        {
-            InitializeComponent();
-        }
-
-        public frmPluginManager(Form parent) 
-            : base(parent)
+        public frmPluginManager(Form myparent) : base (myparent)
         {
             InitializeComponent();
         }
@@ -25,11 +19,8 @@ namespace cpg.Swiftness.Forms
 
             foreach (PluginSystem.Plugin plugin in PluginSystem.Core.Plugins)
             {
-                ctrlPlugin ctrl = new ctrlPlugin(plugin.PluginInfo, plugin.Enable, plugin.Disable, plugin.Load, plugin.Unload);
-
-                flp_plugincontainer.Controls.Add(ctrl);
+                flp_plugincontainer.Controls.Add(plugin.Control);
             }
         }
-
     }
 }

@@ -7,17 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace cpg.Swiftness.Forms
+namespace Swiftness.Forms
 {
-    public partial class frmLog : MDIchild
+    public partial class frmLog : MDIChild
     {
-        public frmLog()
+        public frmLog(Form parent)
+            : base(parent)
         {
             InitializeComponent();
+            Log.Setup(this);
         }
 
-        public frmLog(Form parent) 
-            : base(parent)
+        public frmLog(Form parent, bool nohide)
+            : base(parent, nohide)
         {
             InitializeComponent();
             Log.Setup(this);

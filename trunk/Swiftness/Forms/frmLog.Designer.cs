@@ -1,4 +1,4 @@
-﻿namespace cpg.Swiftness.Forms
+﻿namespace Swiftness.Forms
 {
     partial class frmLog
     {

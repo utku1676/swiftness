@@ -8,11 +8,11 @@
     <ProjectGuid>{E3F6EB4E-BDC1-454E-AD7E-916A5F4E27C2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cpg.Swiftness</RootNamespace>
+    <RootNamespace>Swiftness</RootNamespace>
     <AssemblyName>Swiftness</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>cpg.Swiftness.Program</StartupObject>
+    <StartupObject>Swiftness.Program</StartupObject>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -44,6 +44,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -107,15 +108,17 @@
     <Compile Include="Forms\frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MDIchild.cs">
+    <Compile Include="Forms\MDIChild.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MDIchild.Designer.cs">
-      <DependentUpon>MDIchild.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Handshake\Handler.cs" />
+    <Compile Include="Handshake\HandshakeApi.cs" />
+    <Compile Include="Handshake\Packet.cs" />
+    <Compile Include="Handshake\Socket.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="PluginSystem\Plugin.cs" />
     <Compile Include="PluginSystem\Core.cs" />
+    <Compile Include="PluginSystem\PluginEvent.cs" />
     <Compile Include="PluginSystem\PluginExceptions.cs" />
     <Compile Include="PluginSystem\PluginHandler.cs" />
     <Compile Include="Program.cs" />
@@ -143,9 +146,8 @@
       <DependentUpon>frmSettings.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MDIchild.resx">
-      <DependentUpon>MDIchild.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Forms\MDIChild.resx">
+      <DependentUpon>MDIChild.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -179,15 +181,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{45E822BE-9BBA-41EB-A4F4-482BB9567756}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugin\Plugin.csproj">
       <Project>{65C54637-C022-474E-B5B4-9FAF65969AF3}</Project>
       <Name>Plugin</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

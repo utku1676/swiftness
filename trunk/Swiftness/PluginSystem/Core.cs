@@ -5,9 +5,9 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
-using cpg.Swiftness.Plugin;
+using Swiftness.Plugin;
 
-namespace cpg.Swiftness.PluginSystem
+namespace Swiftness.PluginSystem
 {
     static class Core
     {

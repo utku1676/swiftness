@@ -2,11 +2,11 @@
 using System.Security.Policy;
 using System.Reflection;
 using System.IO;
-using cpg.Swiftness.Plugin;
+using Swiftness.Plugin;
 using System.Runtime.InteropServices;
 
 
-namespace cpg.Swiftness.PluginSystem
+namespace Swiftness.PluginSystem
 {
     class Plugin
     {
@@ -34,25 +34,25 @@ namespace cpg.Swiftness.PluginSystem
         const int WS_SYSMENU = 0x80000;
 
 
-        const short SWP_NOMOVE = 0X2;
+        const short SWP_NOMOVE = 0x2;
         const short SWP_NOSIZE = 1;
-        const short SWP_NOZORDER = 0X4;
+        const short SWP_NOZORDER = 0x4;
         const int SWP_SHOWWINDOW = 0x0040;
 
         #endregion
-
 
         #region Privates
         AppDomain _appDomain;       // AppDomain holding the plugin-assembly
         IPlugin _instance;          // Instance of the plugin-interface
         PluginInfo _pluginInfo;     // Holds information about the plugin (Name, Version, Author, etc)
         FileInfo _fileInfo;         // FileInfo of the Plugin-File
-        Forms.MDIchild _child;      // MDIChild of the Plugin
+        Forms.MDIChild _child;      // MDIChild of the Plugin
         Controls.ctrlPlugin _ctrl;  // Control for the Plugin manager
 
         bool _loaded = false;
         bool _enabled = false;
         bool _autoEnable = false;
+        bool _update = false;
         #endregion
 
         #region Construct
@@ -71,7 +71,13 @@ namespace cpg.Swiftness.PluginSystem
             _fileInfo = new FileInfo(assemblyPath);
             _autoEnable = autoEnable;
 
+            _update = true;
             Load();
+            _update = false;
+
+            _ctrl = new Controls.ctrlPlugin(_pluginInfo, Enable, Disable, Load, Unload);
+
+            PluginStateChanged += new PluginEventHandler(_ctrl.PluginStateChangedHandler);
 
             if (_autoEnable)
                 Enable();
@@ -79,6 +85,17 @@ namespace cpg.Swiftness.PluginSystem
                 Unload();
 
         }
+        #endregion
+
+        #region Events
+
+        public event PluginEventHandler PluginStateChanged;
+
+        private void OnPluginStateChanged(PluginEventArgs args)
+        {
+            PluginStateChanged(this, args);
+        }
+
         #endregion
 
         #region Properties
@@ -183,8 +200,6 @@ namespace cpg.Swiftness.PluginSystem
 
             // Get PluginInfo
             _pluginInfo = _instance.pluginInfo;
-            
-
             //}
             //catch (Exception ex)
             //{
@@ -192,6 +207,8 @@ namespace cpg.Swiftness.PluginSystem
             //}
 
             _loaded = true;
+            if (!_update) 
+                OnPluginStateChanged(new PluginEventArgs(_loaded, _enabled));
         }
 
         /// <summary>
@@ -215,6 +232,8 @@ namespace cpg.Swiftness.PluginSystem
 
             // Unload success ...
             _loaded = false;
+            if (!_update)
+                OnPluginStateChanged(new PluginEventArgs(_loaded, _enabled));
 
         }
 
@@ -240,7 +259,8 @@ namespace cpg.Swiftness.PluginSystem
             SetWindowLong(_instance.Form.Handle, GWL_STYLE, lStyle);
 
             // Create MDIChild
-            _child = new cpg.Swiftness.Forms.MDIchild(Program.mainForm);
+            _child = new Swiftness.Forms.MDIChild(Program.mainForm);
+            _child.Name = _instance.Form.Name;
 
             // Resize MDIChild
             _child.Height = _instance.Form.Height + 40;
@@ -259,6 +279,9 @@ namespace cpg.Swiftness.PluginSystem
             SetWindowPos(_instance.Form.Handle, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_SHOWWINDOW | SWP_NOSIZE);
 
             _enabled = true;
+
+            if (!_update)
+                OnPluginStateChanged(new PluginEventArgs(_loaded, _enabled));
         }
 
         /// <summary>
@@ -282,6 +305,8 @@ namespace cpg.Swiftness.PluginSystem
 
             // Plugin is now disabled
             _enabled = false;
+            if (!_update)
+                OnPluginStateChanged(new PluginEventArgs(_loaded, _enabled));
         }
 
         /// <summary>
@@ -292,18 +317,25 @@ namespace cpg.Swiftness.PluginSystem
             // Update only if plugin is not loaded and not enabled)
             if (!_loaded && !_enabled)
             {
+                _update = true;
                 Load();
+                UpdateControl();
                 Unload();
+                _update = false;
             }
         }
 
+        /// <summary>
+        /// Returns the Control for this Plugin
+        /// </summary>
         public Controls.ctrlPlugin Control
         {
             get
             {
-
+                return _ctrl;
             }
         }
+
         private static void InitializerFunc(string[] args)
         {
             // Get instance of actual appdomain (Your new AppDomain)
@@ -322,15 +354,17 @@ namespace cpg.Swiftness.PluginSystem
                 {
                     // Save name of class
                     mydom.SetData("PluginName", type.FullName);
-                }
-                else if (type.BaseType.Equals(typeof(frmPlugin)))
-                {
-                    mydom.SetData("FormName", type.FullName);
+                    return;
                 }
             }
         }
 
-        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        private void UpdateControl()
+        {
+            _ctrl.PluginInfo = _pluginInfo;
+        }
+
+        private static void MyHandler(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
             Console.WriteLine("MyHandler caught : " + e.Message);

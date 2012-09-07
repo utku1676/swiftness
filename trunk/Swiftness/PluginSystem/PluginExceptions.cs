@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace cpg.Swiftness.PluginSystem
+namespace Swiftness.PluginSystem
 {
     class PluginLoaderException : Exception
     {

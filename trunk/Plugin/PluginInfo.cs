@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace cpg.Swiftness.Plugin
+namespace Swiftness.Plugin
 {
     [Serializable]
     public struct PluginInfo
