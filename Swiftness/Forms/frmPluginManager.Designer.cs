@@ -1,4 +1,4 @@
-﻿namespace cpg.Swiftness.Forms
+﻿namespace Swiftness.Forms
 {
     partial class frmPluginManager
     {
@@ -48,7 +48,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(408, 332);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(507, 396);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // flp_plugincontainer
@@ -58,16 +58,16 @@
             this.flp_plugincontainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flp_plugincontainer.Location = new System.Drawing.Point(3, 3);
             this.flp_plugincontainer.Name = "flp_plugincontainer";
-            this.flp_plugincontainer.Size = new System.Drawing.Size(402, 291);
+            this.flp_plugincontainer.Size = new System.Drawing.Size(501, 355);
             this.flp_plugincontainer.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btn_UpdatePluginList);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 300);
+            this.panel1.Location = new System.Drawing.Point(3, 364);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(402, 29);
+            this.panel1.Size = new System.Drawing.Size(501, 29);
             this.panel1.TabIndex = 2;
             // 
             // btn_UpdatePluginList
@@ -80,13 +80,13 @@
             this.btn_UpdatePluginList.UseVisualStyleBackColor = true;
             this.btn_UpdatePluginList.Click += new System.EventHandler(this.btn_UpdatePluginList_Click);
             // 
-            // frmPlugins
+            // frmPluginManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(408, 332);
+            this.ClientSize = new System.Drawing.Size(507, 396);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "frmPlugins";
+            this.Name = "frmPluginManager";
             this.Text = "Plugin-Manager";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

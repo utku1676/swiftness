@@ -1,4 +1,4 @@
-﻿namespace cpg.Swiftness.Controls
+﻿namespace Swiftness.Controls
 {
     partial class ctrlPlugin
     {
@@ -83,6 +83,7 @@
             // 
             // btn_endisable
             // 
+            this.btn_endisable.Enabled = false;
             this.btn_endisable.Location = new System.Drawing.Point(209, 11);
             this.btn_endisable.Name = "btn_endisable";
             this.btn_endisable.Size = new System.Drawing.Size(75, 23);

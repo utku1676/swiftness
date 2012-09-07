@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using cpg.Swiftness.Plugin;
+using Swiftness.Plugin;
 
-namespace cpg.Swiftness.Plugins.TestPlugin
+namespace Swiftness.Plugins.TestPlugin
 {
     [Serializable]
     public partial class frmTest : frmPlugin

@@ -8,7 +8,7 @@
     <ProjectGuid>{F567DF8D-CE1D-47DB-BD09-69085AEEAD15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cpg.Swiftness.Plugins.TestPlugin</RootNamespace>
+    <RootNamespace>Swiftness.Plugins.TestPlugin</RootNamespace>
     <AssemblyName>TestPlugin</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

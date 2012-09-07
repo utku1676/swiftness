@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace cpg.Swiftness.Plugin
+namespace Swiftness.Plugin
 {
     [Serializable]
     public partial class frmPlugin : Form

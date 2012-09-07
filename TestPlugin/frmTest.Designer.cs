@@ -1,4 +1,4 @@
-﻿namespace cpg.Swiftness.Plugins.TestPlugin
+﻿namespace Swiftness.Plugins.TestPlugin
 {
     partial class frmTest
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace cpg.Swiftness.Forms
+namespace Swiftness.Forms
 {
     [Serializable]
     public partial class frmMain : Form
@@ -23,7 +23,7 @@ namespace cpg.Swiftness.Forms
         private void frmMain_Load(object sender, EventArgs e)
         {
             new frmPluginManager(this);
-            new frmLog(this).Show(); ;
+            new frmLog(this, true).Show();
 
             Log.Write("test");
         }

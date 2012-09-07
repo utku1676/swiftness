@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace cpg.Swiftness
+namespace Swiftness
 {
     static class Program
     {
@@ -19,6 +19,8 @@ namespace cpg.Swiftness
             Application.SetCompatibleTextRenderingDefault(false);
             mainForm = new Forms.frmMain();
             Application.Run(mainForm);
+
+            Console.Read();
         }
     }
 }

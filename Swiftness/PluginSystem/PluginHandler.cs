@@ -1,15 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace cpg.Swiftness.PluginSystem
+namespace Swiftness.PluginSystem
 {
-    static class PluginHandler
+    static unsafe class PluginHandler
     {
-        public static void RegisterEventHandler(Framework.Packet packet)
+        public delegate void PacketHandler(TPacket* packet);
+
+        public static void RegisterPacketHandler(PacketDirection direction, ushort OpCode, PacketHandler handler)
         {
 
         }
+
+    }
+
+    enum PacketDirection
+    {
+        FROM_CLIENT,
+        TO_CLIENT,
+        FROM_SERVER,
+        TO_SERVER
+    }
+
+    struct TPacket
+    {
+
     }
 }

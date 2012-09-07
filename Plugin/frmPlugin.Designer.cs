@@ -1,4 +1,4 @@
-﻿namespace cpg.Swiftness.Plugin
+﻿namespace Swiftness.Plugin
 {
     partial class frmPlugin
     {

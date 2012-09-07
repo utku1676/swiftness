@@ -1,7 +1,8 @@
 ﻿using System;
-using cpg.Swiftness.Plugin;
+using Swiftness.Plugin;
+using System.Runtime.Serialization;
 
-namespace cpg.Swiftness.Plugins.TestPlugin
+namespace Swiftness.Plugins.TestPlugin
 {
     public class TestPlugin : MarshalByRefObject, IPlugin
     {
@@ -12,6 +13,8 @@ namespace cpg.Swiftness.Plugins.TestPlugin
         Version pVersion = new Version(1, 0);
 
         frmTest test;
+
+        #region IPlugin Member
 
         public PluginInfo pluginInfo
         {
@@ -40,8 +43,19 @@ namespace cpg.Swiftness.Plugins.TestPlugin
 
         public void Shutdown(PluginParams param)
         {
+            test.Dispose();
+        }
+
+        public bool OnServerToClient()
+        {
             throw new NotImplementedException();
         }
 
+        public bool OnClientToServer()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
